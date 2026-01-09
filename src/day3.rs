@@ -4,8 +4,8 @@ use crate::shared::{Solution, read_input_string};
 
 pub struct Day3;
 
-fn solve_part_1(lines: Vec<Vec<u32>>) -> i64 {
-    let mut total = 0i64;
+fn solve_part_1(lines: Vec<Vec<u32>>) -> u64 {
+    let mut total = 0u64;
     for line in lines {
         let mut highest = 0;
         let mut second_highest = 0;
@@ -19,7 +19,7 @@ fn solve_part_1(lines: Vec<Vec<u32>>) -> i64 {
         }
         let highest = format!("{highest}{second_highest}");
         println!("Highest {highest}");
-        total += highest.parse::<i64>().unwrap();
+        total += highest.parse::<u64>().unwrap();
     }
     total
 }
@@ -32,7 +32,7 @@ fn solve_part_1(lines: Vec<Vec<u32>>) -> i64 {
 //    - until length of doubly linked list + remaining candidates == 12
 //  - NO: push candidate
 
-fn solve_part_2(lines: Vec<Vec<u32>>) -> i64 {
+fn solve_part_2(lines: Vec<Vec<u32>>) -> u64 {
     let mut total = 0;
     for line in lines {
         let mut solution = LinkedList::new();
@@ -64,7 +64,7 @@ fn solve_part_2(lines: Vec<Vec<u32>>) -> i64 {
             .collect::<Vec<String>>()
             .join("");
         println!("Highest {highest}");
-        total += highest.parse::<i64>().unwrap();
+        total += highest.parse::<u64>().unwrap();
     }
 
     total
@@ -81,7 +81,7 @@ fn parse(input: &str) -> Vec<Vec<u32>> {
 }
 
 impl Solution for Day3 {
-    fn sample_part_1() -> i64 {
+    fn sample_part_1() -> u64 {
         let input = "987654321111111
 811111111111119
 234234234234278
@@ -90,7 +90,7 @@ impl Solution for Day3 {
         solve_part_1(ranges)
     }
 
-    fn sample_part_2() -> i64 {
+    fn sample_part_2() -> u64 {
         let input = "987654321111111
 811111111111119
 234234234234278
@@ -99,11 +99,11 @@ impl Solution for Day3 {
         solve_part_2(ranges)
     }
 
-    fn part_1() -> i64 {
+    fn part_1() -> u64 {
         solve_part_1(parse(&read_input_string(3)))
     }
 
-    fn part_2() -> i64 {
+    fn part_2() -> u64 {
         solve_part_2(parse(&read_input_string(3)))
     }
 }

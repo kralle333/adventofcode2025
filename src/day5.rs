@@ -1,17 +1,12 @@
-use std::{
-    collections::HashSet,
-    ops::{Deref, Range, RangeInclusive},
-};
+use std::ops::RangeInclusive;
 
-use array2d::Array2D;
-
-use crate::shared::{Solution, read_input_lines, read_input_string};
+use crate::shared::{Solution, read_input_string};
 
 pub struct Day5;
 
 type Input = (Vec<RangeInclusive<u64>>, Vec<u64>);
 
-fn solve_part_1(input: &Input) -> i64 {
+fn solve_part_1(input: &Input) -> u64 {
     let mut total = 0;
     for ingredient in &input.1 {
         if input.0.iter().any(|x| x.contains(ingredient)) {
@@ -22,33 +17,68 @@ fn solve_part_1(input: &Input) -> i64 {
     total
 }
 
-fn solve_part_2(input: &Input) -> i64 {
-    let lowest_val = input
-        .0
-        .iter()
-        .min_by(|x, y| x.start().cmp(y.start()))
-        .unwrap()
-        .start();
-    let highest_val = input
-        .0
-        .iter()
-        .max_by(|x, y| x.end().cmp(y.end()))
-        .unwrap()
-        .end();
-
-    let a = 0..16;
-    let b = 10..25;
-
-    println!("from {lowest_val} to {highest_val}");
-    let as_range = *lowest_val..*highest_val;
+fn solve_part_2(input: &Input) -> u64 {
+    let mut ranges = vec![];
+    #[derive(Clone, Copy, Debug)]
+    struct Part {
+        from: u64,
+        to: u64,
+    }
     let mut total = 0;
-    for ingredient in as_range {
-        if input.0.iter().any(|x| x.contains(&ingredient)) {
-            // println!("{total}");
-            total += 1;
+
+    for range in &input.0 {
+        ranges.push(Part {
+            from: *range.start(),
+            to: *range.end(),
+        });
+    }
+
+    // 0,1,2
+    // 0 and 1
+    // Merge = new 0,1
+    // 0 and 1
+
+    let mut final_ranges: Vec<Part> = vec![];
+
+    for range in ranges {
+        final_ranges.push(range);
+    }
+    let mut merged = true;
+    while merged {
+        let mut to_remove = vec![];
+        for i in 0..final_ranges.len() {
+            for j in (i + 1)..final_ranges.len() {
+                let a = final_ranges[i];
+                let b = final_ranges[j];
+                if a.from >= b.from && a.from <= b.to {
+                    final_ranges[i].from = b.from;
+                    final_ranges[i].to = b.to.max(a.to);
+                    to_remove.push(j);
+                    break;
+                } else if b.from >= a.from && b.from <= a.to {
+                    final_ranges[i].to = a.to.max(b.to);
+                    to_remove.push(j);
+                    break;
+                }
+            }
+        }
+        merged = !to_remove.is_empty();
+        if let Some(r) = to_remove.first() {
+            final_ranges.remove(*r);
         }
     }
-    total
+
+    for range in final_ranges {
+        total += (range.to - range.from) + 1;
+        // for i in range.from..=range.to {
+        //     // print!("{i} ");
+        //     // total += 1;
+        // }
+        println!("{}-{}", range.from, range.to);
+    }
+    // TOO HIGH
+    // 352946349407352
+    total as u64
 }
 fn parse(s: &str) -> Input {
     let mut ranges = vec![];
@@ -74,7 +104,7 @@ fn parse(s: &str) -> Input {
 }
 
 impl Solution for Day5 {
-    fn sample_part_1() -> i64 {
+    fn sample_part_1() -> u64 {
         let input = "3-5
 10-14
 16-20
@@ -89,7 +119,7 @@ impl Solution for Day5 {
         solve_part_1(&parse(input))
     }
 
-    fn sample_part_2() -> i64 {
+    fn sample_part_2() -> u64 {
         let input = "3-5
 10-14
 16-20
@@ -103,12 +133,12 @@ impl Solution for Day5 {
 32";
         solve_part_2(&parse(input))
     }
-    fn part_1() -> i64 {
+    fn part_1() -> u64 {
         let input = read_input_string(5);
         solve_part_1(&parse(&input))
     }
 
-    fn part_2() -> i64 {
+    fn part_2() -> u64 {
         let input = read_input_string(5);
         solve_part_2(&parse(&input))
     }

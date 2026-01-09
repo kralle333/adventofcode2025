@@ -4,13 +4,13 @@ use crate::shared::{Solution, read_input_lines, read_input_string};
 
 pub struct Day2;
 
-fn solve_part_1(lines: Vec<(String, String)>) -> i64 {
+fn solve_part_1(lines: Vec<(String, String)>) -> u64 {
     let mut invalid_ids = 0;
     for line in lines {
         let mut next = line.0;
-        let end_as_number: i64 = line.1.trim().parse().unwrap();
+        let end_as_number: u64 = line.1.trim().parse().unwrap();
         loop {
-            let next_as_number: i64 = next.parse().unwrap();
+            let next_as_number: u64 = next.parse().unwrap();
             if next.len() % 2 == 0 {
                 let (left, right) = next.split_at(next.len() / 2);
                 if left == right {
@@ -26,15 +26,15 @@ fn solve_part_1(lines: Vec<(String, String)>) -> i64 {
     }
     invalid_ids
 }
-fn solve_part_2(lines: Vec<(String, String)>) -> i64 {
+fn solve_part_2(lines: Vec<(String, String)>) -> u64 {
     let mut invalid_ids = 0;
-    let mut solved: HashMap<i64, i64> = HashMap::new();
+    let mut solved: HashMap<u64, u64> = HashMap::new();
     for line in lines {
         let mut next = line.0;
         let mut for_line = vec![];
-        let end_as_number: i64 = line.1.trim().parse().unwrap();
+        let end_as_number: u64 = line.1.trim().parse().unwrap();
         loop {
-            let next_as_number: i64 = next.parse().unwrap();
+            let next_as_number: u64 = next.parse().unwrap();
             if let Some(v) = solved.get(&next_as_number) {
                 println!("Found cached {}", next_as_number);
                 invalid_ids += v;
@@ -78,7 +78,7 @@ fn solve_part_2(lines: Vec<(String, String)>) -> i64 {
         }
         // println!("line {for_line:?}");
     }
-    invalid_ids
+    invalid_ids as u64
 }
 
 fn parse(input: &str) -> Vec<(String, String)> {
@@ -92,23 +92,23 @@ fn parse(input: &str) -> Vec<(String, String)> {
 }
 
 impl Solution for Day2 {
-    fn sample_part_1() -> i64 {
+    fn sample_part_1() -> u64 {
         let input = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124";
         let ranges = parse(input);
         solve_part_1(ranges)
     }
 
-    fn sample_part_2() -> i64 {
+    fn sample_part_2() -> u64 {
         let input = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124";
         let ranges = parse(input);
         solve_part_2(ranges)
     }
 
-    fn part_1() -> i64 {
+    fn part_1() -> u64 {
         solve_part_1(parse(&read_input_string(2)))
     }
 
-    fn part_2() -> i64 {
+    fn part_2() -> u64 {
         solve_part_2(parse(&read_input_string(2)))
     }
 }

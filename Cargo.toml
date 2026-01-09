@@ -5,3 +5,5 @@ edition = "2024"
 
 [dependencies]
 array2d = "0.3.2"
+ordered-float = "5.1.0"
+priority-queue = "2.7.0"

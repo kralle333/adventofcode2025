@@ -26,10 +26,10 @@ pub trait Solution {
             Test::SamplePart2 => println!(" Sample Part 2: {}", Self::sample_part_2()),
         }
     }
-    fn sample_part_1() -> i64;
-    fn sample_part_2() -> i64;
-    fn part_1() -> i64;
-    fn part_2() -> i64;
+    fn sample_part_1() -> u64;
+    fn sample_part_2() -> u64;
+    fn part_1() -> u64;
+    fn part_2() -> u64;
 }
 
 pub fn read_input_string(day: i32) -> String {
@@ -44,11 +44,19 @@ pub fn read_input_lines(day: i32) -> Vec<String> {
         .collect()
 }
 
-pub fn read_input_map(day: i32) -> Array2D<char> {
+pub fn read_input_map_rows(day: i32) -> Array2D<char> {
     let s = read_input_string(day);
     let chars = s
         .lines()
         .map(|x| x.chars().collect::<Vec<char>>())
         .collect::<Vec<Vec<char>>>();
     Array2D::from_rows(&chars).unwrap()
+}
+pub fn read_input_map_columns(day: i32) -> Array2D<char> {
+    let s = read_input_string(day);
+    let chars = s
+        .lines()
+        .map(|x| x.chars().collect::<Vec<char>>())
+        .collect::<Vec<Vec<char>>>();
+    Array2D::from_columns(&chars).unwrap()
 }

@@ -6,6 +6,10 @@ use crate::{
     day3::Day3,
     day4::Day4,
     day5::Day5,
+    day6::Day6,
+    day7::Day7,
+    day8::Day8,
+    day9::Day9,
     shared::{Solution, Test},
 };
 
@@ -14,6 +18,10 @@ pub mod day2;
 pub mod day3;
 pub mod day4;
 pub mod day5;
+pub mod day6;
+pub mod day7;
+pub mod day8;
+pub mod day9;
 pub mod shared;
 
 fn main() {
@@ -36,10 +44,10 @@ fn main() {
         3 => Day3::solve(test),
         4 => Day4::solve(test),
         5 => Day5::solve(test),
-        // 6 => Day6::solve(test),
-        // 7 => Day7::solve(test),
-        // 8 => Day8::solve(test),
-        // 9 => Day9::solve(test),
+        6 => Day6::solve(test),
+        7 => Day7::solve(test),
+        8 => Day8::solve(test),
+        9 => Day9::solve(test),
         // 10 => Day10::solve(test),
         // 11 => Day11::solve(test),
         // 12 => Day12::solve(test),

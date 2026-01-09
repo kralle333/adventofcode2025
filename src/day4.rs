@@ -6,7 +6,7 @@ use crate::shared::{Solution, read_input_lines, read_input_string};
 
 pub struct Day4;
 
-fn solve_part_1(array: &Array2D<char>) -> i64 {
+fn solve_part_1(array: &Array2D<char>) -> u64 {
     let (width, height) = (array.row_len(), array.column_len());
     let mut total = 0;
     let dirs: Vec<(i32, i32)> = vec![
@@ -49,7 +49,7 @@ fn solve_part_1(array: &Array2D<char>) -> i64 {
     total
 }
 
-fn solve_part_2(mut array: Array2D<char>) -> i64 {
+fn solve_part_2(mut array: Array2D<char>) -> u64 {
     let (width, height) = (array.row_len(), array.column_len());
     let mut total = 0;
     let dirs: Vec<(i32, i32)> = vec![
@@ -114,7 +114,7 @@ fn parse(s: &str) -> Array2D<char> {
 }
 
 impl Solution for Day4 {
-    fn sample_part_1() -> i64 {
+    fn sample_part_1() -> u64 {
         let input = "..@@.@@@@.
 @@@.@.@.@@
 @@@@@.@.@@
@@ -128,7 +128,7 @@ impl Solution for Day4 {
         solve_part_1(&parse(input))
     }
 
-    fn sample_part_2() -> i64 {
+    fn sample_part_2() -> u64 {
         let input = "..@@.@@@@.
 @@@.@.@.@@
 @@@@@.@.@@
@@ -141,12 +141,12 @@ impl Solution for Day4 {
 @.@.@@@.@.";
         solve_part_2(parse(input))
     }
-    fn part_1() -> i64 {
+    fn part_1() -> u64 {
         let input = read_input_string(4);
         solve_part_1(&parse(&input))
     }
 
-    fn part_2() -> i64 {
+    fn part_2() -> u64 {
         let input = read_input_string(4);
         solve_part_2(parse(&input))
     }
